@@ -1,0 +1,16 @@
+# Entorno virtual
+venv/
+
+# Archivos compilados
+__pycache__/
+*.pyc
+
+# Notebooks checkpoints
+.ipynb_checkpoints/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Variables de entorno
+.env
