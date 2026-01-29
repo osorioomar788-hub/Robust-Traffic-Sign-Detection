@@ -1,6 +1,6 @@
 # Robust Traffic Sign Detection
 
-Proyecto académico desarrollado para una conferencia, enfocado en la detección robusta de señales de tránsito utilizando técnicas de Inteligencia Artificial.
+Proyecto académico desarrollado para la 25th Mexican International Conference on Artificial Intelligence (MICAI), enfocado en la detección robusta de señales de tránsito utilizando técnicas de Inteligencia Artificial.
 
 ---
 
