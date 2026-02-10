@@ -1,16 +1,323 @@
-# Entorno virtual
-venv/
+# ============================================
+# DATOS - NO SUBIR (MUY PESADO)
+# ============================================
+# Dataset completo
+data/raw/
+data/processed/train/
+data/processed/val/
+data/processed/test/
 
-# Archivos compilados
+# Imágenes y archivos pesados
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.webp
+*.zip
+*.tar.gz
+*.tar
+*.rar
+*.7z
+*.gz
+
+# Videos
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.flv
+
+# ============================================
+# MODELOS - NO SUBIR (MUY PESADO)
+# ============================================
+# Pesos de modelos entrenados
+models/weights/*.pt
+models/weights/*.pth
+models/weights/*.onnx
+models/weights/*.trt
+models/weights/*.engine
+models/weights/*.tflite
+models/weights/*.mlmodel
+*.weights
+*.h5
+*.pb
+*.safetensors
+
+# Checkpoints de entrenamiento
+checkpoints/
+*.ckpt
+
+# ============================================
+# PYTHON
+# ============================================
+# Bytecode
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+*.so
 
-# Notebooks checkpoints
+# Distribución / empaquetado
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# ============================================
+# ENTORNO VIRTUAL
+# ============================================
+venv/
+env/
+ENV/
+.venv/
+env.bak/
+venv.bak/
+
+# ============================================
+# JUPYTER NOTEBOOK
+# ============================================
 .ipynb_checkpoints/
+*.ipynb_checkpoints
+*/.ipynb_checkpoints/*
 
-# Archivos del sistema
+# Jupyter Notebook config
+.jupyter/
+
+# ============================================
+# IDE - VISUAL STUDIO CODE
+# ============================================
+.vscode/
+*.code-workspace
+.history/
+
+# ============================================
+# IDE - PYCHARM
+# ============================================
+.idea/
+*.iml
+*.iws
+.idea_modules/
+
+# ============================================
+# IDE - OTROS
+# ============================================
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.*.swp
+.*.swo
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================
+# SISTEMA OPERATIVO
+# ============================================
+# macOS
 .DS_Store
-Thumbs.db
+.DS_Store?
+._*
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================
+# LOGS Y DEBUGGING
+# ============================================
+*.log
+logs/
+*.log.*
+
+# Pytest
+.pytest_cache/
+.cache/
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+.hypothesis/
+.tox/
+
+# ============================================
+# ENTRENAMIENTO Y EXPERIMENTOS
+# ============================================
+# TensorBoard
+runs/
+events.out.tfevents.*
+
+# Weights & Biases
+wandb/
+
+# MLflow
+mlruns/
+
+# PyTorch Lightning
+lightning_logs/
+
+# Experimentos
+experiments/
+results/experiments/
+
+# ============================================
+# ARCHIVOS TEMPORALES
+# ============================================
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+
+# ============================================
+# CONFIGURACIÓN LOCAL Y SECRETS
+# ============================================
 # Variables de entorno
 .env
+.env.local
+.env.*.local
+.envrc
+
+# Configuración local
+config.local.yaml
+config.local.yml
+config.local.json
+settings.local.py
+
+# Credenciales y claves
+*.key
+*.pem
+*.p12
+credentials.json
+secrets.yaml
+secrets.yml
+
+# ============================================
+# BASES DE DATOS
+# ============================================
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+*.dump
+
+# ============================================
+# DOCUMENTACIÓN GENERADA
+# ============================================
+# Sphinx
+docs/_build/
+docs/_static/
+docs/_templates/
+
+# LaTeX
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+*.dvi
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.bcf
+*.blg
+*.run.xml
+
+# ============================================
+# OTROS ARCHIVOS ESPECÍFICOS DEL PROYECTO
+# ============================================
+# Archivos de prueba grandes
+test_image.jpg
+test_result.jpg
+*.test.jpg
+
+# Outputs temporales
+output/
+outputs/
+
+# Cache de modelos pre-entrenados
+*.cache/
+.cache/
+
+# Hugging Face cache
+.huggingface/
+
+# ============================================
+# EXCEPCIONES (archivos que SÍ queremos)
+# ============================================
+# Mantener estructura de carpetas vacías
+!.gitkeep
+
+# Permitir algunas imágenes de ejemplo (muy pequeñas)
+!results/sample_detections/*.png
+!docs/images/*.png
+
+# Permitir configuraciones YAML del modelo
+!models/configs/*.yaml
+!models/configs/*.yml
+
+# Permitir dataset.yaml
+!data/processed/dataset.yaml"yolov8n.pt" 
