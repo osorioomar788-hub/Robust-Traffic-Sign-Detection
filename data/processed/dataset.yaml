@@ -1,7 +1,7 @@
 # TT100K Dataset Configuration
 # Proyecto: Detector Robusto de Señales de Tráfico - 25th MICAI
 
-path: C:\Users\Flash\OneDrive\Documents\UPA\MICAI\Robust-Traffic-Sign-Detection\data\processed
+path: C:\Users\yaela\OneDrive\Documentos\MCAI\Robust-Traffic-Sign-Detection\data\processed
 train: train/images
 val: val/images
 test: test/images

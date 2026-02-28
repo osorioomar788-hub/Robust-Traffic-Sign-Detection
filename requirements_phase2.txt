@@ -1,0 +1,26 @@
+# ─────────────────────────────────────────────
+# requirements_phase2.txt
+# Fase 2: Generación de Datos Sintéticos y Aumentación
+# Proyecto: Robust Traffic Sign Detection (MICAI 25)
+# ─────────────────────────────────────────────
+
+# Aumentación clásica
+albumentations>=1.4.0
+opencv-python>=4.9.0
+numpy>=1.26.0
+
+# Visualización
+matplotlib>=3.8.0
+
+# Utilidades
+tqdm>=4.66.0
+Pillow>=10.0.0
+
+# ─── OPCIONAL: Aumentación Generativa (GPU requerida) ───
+# Descomenta si cuentas con GPU NVIDIA con ≥8GB VRAM
+# diffusers>=0.27.0
+# transformers>=4.38.0
+# accelerate>=0.28.0
+# torch>=2.2.0
+# controlnet-aux>=0.0.7
+# xformers>=0.0.25        # Optimización de memoria (recomendado)
