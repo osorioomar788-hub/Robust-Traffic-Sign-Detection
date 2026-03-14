@@ -1,0 +1,54 @@
+# Ultralytics YOLOv8-Custom | Phase 3 | MICAI 2025
+# Robust Traffic Sign Detection — Custom architecture with:
+#   - SubPixelConv: Learnable upsampling replacing nn.Upsample
+#   - CoordAtt: Coordinate Attention after C2f blocks in neck
+# Base: yolov8n.yaml | Dataset: TT100K (143 classes)
+
+nc: 143  # TT100K traffic sign classes
+
+scales:
+  n: [0.33, 0.25, 1024]  # YOLOv8n scale: depth=0.33, width=0.25, max_channels=1024
+
+# ============================================================================
+# BACKBONE — Stock YOLOv8n (verbatim, DO NOT MODIFY)
+# ============================================================================
+backbone:
+  - [-1, 1, Conv, [64, 3, 2]]          # 0  → P1/2
+  - [-1, 1, Conv, [128, 3, 2]]         # 1  → P2/4
+  - [-1, 3, C2f, [128, True]]          # 2
+  - [-1, 1, Conv, [256, 3, 2]]         # 3  → P3/8
+  - [-1, 6, C2f, [256, True]]          # 4  ★ P3 output — feeds layer 15
+  - [-1, 1, Conv, [512, 3, 2]]         # 5  → P4/16
+  - [-1, 6, C2f, [512, True]]          # 6  ★ P4 output — feeds layer 11
+  - [-1, 1, Conv, [1024, 3, 2]]        # 7  → P5/32
+  - [-1, 3, C2f, [1024, True]]         # 8
+  - [-1, 1, SPPF, [1024, 5]]           # 9  ★ SPPF output — feeds layers 10, 23
+
+# ============================================================================
+# HEAD — Modified with SubPixelConv + CoordAtt
+# ============================================================================
+head:
+  # ─── FPN Top-down path ───────────────────────────────
+  - [-1, 1, SubPixelConv, [512]]        # 10  ◄ CUSTOM: replaces nn.Upsample
+  - [[-1, 6], 1, Concat, [1]]           # 11
+  - [-1, 3, C2f, [512]]                 # 12
+  - [-1, 1, CoordAtt, [512, 32]]        # 13  ◄ CUSTOM: attention
+
+  - [-1, 1, SubPixelConv, [256]]        # 14  ◄ CUSTOM: replaces nn.Upsample
+  - [[-1, 4], 1, Concat, [1]]           # 15
+  - [-1, 3, C2f, [256]]                 # 16
+  - [-1, 1, CoordAtt, [256, 32]]        # 17  ◄ CUSTOM: attention
+
+  # ─── PAN Bottom-up path ──────────────────────────────
+  - [-1, 1, Conv, [256, 3, 2]]          # 18
+  - [[-1, 13], 1, Concat, [1]]          # 19  ◄ NOTE: connects to layer 13
+  - [-1, 3, C2f, [512]]                 # 20
+  - [-1, 1, CoordAtt, [512, 32]]        # 21  ◄ CUSTOM: attention
+
+  - [-1, 1, Conv, [512, 3, 2]]          # 22
+  - [[-1, 9], 1, Concat, [1]]           # 23  ◄ NOTE: connects to layer 9
+  - [-1, 3, C2f, [1024]]               # 24
+  - [-1, 1, CoordAtt, [1024, 32]]       # 25  ◄ CUSTOM: attention
+
+  # ─── Detection ───────────────────────────────────────
+  - [[17, 21, 25], 1, Detect, [nc]]     # 26  Detect(P3, P4, P5)
