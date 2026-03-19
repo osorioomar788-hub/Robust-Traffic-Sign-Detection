@@ -1,7 +1,10 @@
 # TT100K Dataset Configuration
 # Proyecto: Detector Robusto de Señales de Tráfico - 25th MICAI
 
-path: C:\Users\yaela\OneDrive\Documentos\MCAI\Robust-Traffic-Sign-Detection\data\processed
+# Ruta base exacta desde tu terminal (la raíz del proyecto)
+path: data/split
+
+# Carpetas (YOLO las sumará a la ruta de arriba)
 train: train/images
 val: val/images
 test: test/images
