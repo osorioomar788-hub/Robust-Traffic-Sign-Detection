@@ -2,7 +2,7 @@ import sys
 # Esto asegura que Python encuentre tus carpetas locales
 sys.path.insert(0, '.') 
 
-# 1. INYECTAR LA ARQUITECTURA DE AMAURY (El Monkey-Patch)
+# 1. INYECTAR LA ARQUITECTURA (El Monkey-Patch)
 try:
     from scripts.phase3_architecture_design import register_custom_modules
     register_custom_modules()
@@ -15,7 +15,7 @@ from ultralytics import YOLO
 
 if __name__ == '__main__':
     # 3. CARGAR EL MODELO BASE O PERSONALIZADO
-    # Si Amaury ya subió su archivo, usa el de la línea 19. Si no, usa el yolov8n.pt temporalmente para probar.
+    # Usa el de la línea 19 para utilizar la fase 3, Si no, usa el yolov8n.pt temporalmente para probar (línea 20).
     #model = YOLO('models/configs/yolov8_custom.yaml') 
     model = YOLO('yolov8n.pt') 
 
@@ -23,11 +23,12 @@ if __name__ == '__main__':
     print("Iniciando entrenamiento de la Fase 4...")
     
     model.train(
-        data='data/processed/dataset.yaml', # La ruta al mapa de datos de Omar
-        epochs=1,                           # Cantidad de veces que la red verá TODO el dataset   100
+        data='data/processed/dataset.yaml', # La ruta al mapa de datos
+        epochs=50,                          # Cantidad de veces que la red verá TODO el dataset
         imgsz=640,                          # Resolución a la que se redimensionarán las imágenes
-        batch=4,                            # Cuántas imágenes procesa a la vez (Ajustar según tu GPU)  16
-        device='cpu',                       # 0 indica que use tu tarjeta de video NVIDIA (CUDA)
-        workers=4,                          # Cuántos hilos de tu procesador ayudan a cargar imágenes  8
-        name='micai_phase4_run1'            # Nombre de la carpeta donde se guardarán tus resultados
+        batch=16,                           # Cuántas imágenes procesa a la vez (Ajustar según tu GPU)
+        device=0,                           # Indica que use tu tarjeta de video NVIDIA (CUDA)
+        workers=8,                          # Cuántos hilos de tu procesador ayudan a cargar imágenes
+        project='runs/detect',              # EL CANDADO: Obliga a guardar los resultados aquí
+        name='test2_focal'                  # Nombre de la carpeta donde se guardarán tus resultados
     )

@@ -6,6 +6,7 @@ data/raw/
 data/processed/train/
 data/processed/val/
 data/processed/test/
+data/split/
 
 # Imágenes y archivos pesados
 *.jpg
@@ -35,6 +36,8 @@ data/processed/test/
 # Pesos de modelos entrenados
 models/weights/*.pt
 models/weights/*.pth
+*.pt
+*.pth
 models/weights/*.onnx
 models/weights/*.trt
 models/weights/*.engine
@@ -225,6 +228,7 @@ temp/
 *.backup
 *.old
 *.orig
+*.cache
 
 # ============================================
 # CONFIGURACIÓN LOCAL Y SECRETS
@@ -320,4 +324,4 @@ outputs/
 !models/configs/*.yml
 
 # Permitir dataset.yaml
-!data/processed/dataset.yaml"yolov8n.pt" 
+!data/processed/dataset.yaml
