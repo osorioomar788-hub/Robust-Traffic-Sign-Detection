@@ -15,6 +15,8 @@ import cv2
 import numpy as np
 from tqdm import tqdm
 
+from scripts.phase1_remap_labels import remap_labels_dense
+
 
 class TT100KDatasetPreprocessor:
     """
@@ -376,6 +378,21 @@ def main():
     for split in ['train', 'test']:
         preprocessor.convert_annotations_to_yolo(annotations, class_to_id, split)
     
+    # Paso 4b: Dense-pack class IDs to [0, nc-1] across all splits (audit F-3).
+    # TT100K's `types` list carries 232 entries but only ~143 classes actually
+    # appear in data; Ultralytics requires densely packed IDs. Train split is
+    # the source of truth; val/test annotations referring to train-absent
+    # classes are dropped. Idempotent — no-op if already dense.
+    print("\n=== Dense-packing class IDs (audit F-3) ===")
+    remap_labels_dense(
+        map_source_globs=(f"{preprocessor.processed_dir}/train/labels/*.txt",),
+        rewrite_globs=(
+            f"{preprocessor.processed_dir}/train/labels/*.txt",
+            f"{preprocessor.processed_dir}/val/labels/*.txt",
+            f"{preprocessor.processed_dir}/test/labels/*.txt",
+        ),
+    )
+
     # Paso 5: Crear archivo dataset.yaml
     preprocessor.create_dataset_yaml(class_to_id)
     
