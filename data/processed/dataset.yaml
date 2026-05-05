@@ -4,7 +4,7 @@
 # label IDs [0, 142]. Original (non-dense) IDs preserved in
 # class_id_map.json alongside this file.
 
-path: ../split
+path: ./data/split
 train: train/images
 val: val/images
 test: test/images
