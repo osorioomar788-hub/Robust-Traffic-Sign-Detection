@@ -6,7 +6,10 @@ data/raw/
 data/processed/train/
 data/processed/val/
 data/processed/test/
-data/split/
+# Track YOLO label .txt files under data/split/, but not the (large) images.
+# Phase-4 audit H-2: labels are first-class artefacts; images are not.
+data/split/*/images/
+data/augmented/*/images/
 
 # Imágenes y archivos pesados
 *.jpg
