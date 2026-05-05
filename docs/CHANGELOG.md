@@ -36,3 +36,11 @@ Closes the 21 findings catalogued in [`docs/audits/2026-04-17-phase4-audit.md`](
 Commit `99056f0f` ("clean requirements, fix dataset paths, update gitignore and backup focal loss") *also* mutated `nc` from 221 → 232 in `data/processed/dataset.yaml`, an architectural change that the message did not advertise. Force-pushing to rewrite history was rejected by PI; this entry exists so that future readers correlating `git log` with the audit findings can see the discrepancy without spelunking the diff (audit **H-3**, **M-4**, **F-10**).
 
 **Going forward, commits should be atomic and single-intent.** A `chore:` commit that touches `requirements.txt` should not also flip a hyperparameter in `dataset.yaml` — the latter belongs in a separate `feat:` or `fix:` commit with a message that explains the dimension change. (`CONTRIBUTING.md` formalising this is in the backlog.)
+
+### Audit follow-ups (2026-05-04 same-day)
+* `data/processed/dataset.yaml` — path resolution failed under Windows when 
+  Ultralytics `settings.json` had `datasets_dir` pointing elsewhere; reset 
+  required (`yolo settings datasets_dir=''`) and yaml path normalized.
+* `scripts/phase4_validate.py` — `model.model(dummy_batch)` failed with 
+  `AttributeError: 'dict' object has no attribute 'box'` because `self.hyp` 
+  is normally inflated by Trainer; manual `get_cfg(DEFAULT_CFG)` added.
