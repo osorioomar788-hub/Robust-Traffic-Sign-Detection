@@ -8,6 +8,56 @@ round** + **fix item** rather than by released version.
 
 ---
 
+## 2026-05-04 — Phase 4 handoff to Enrique (round 2)
+
+The Focal Loss implementation produced during the audit closure was
+intentionally removed and handed back to Enrique for re-implementation
+with his own criteria. **This is NOT a regression of the audit** — all
+structural fixes (nc=143, dense label remap, custom model loaded,
+dataset.yaml path, requirements pinning, validator skeleton, LICENSE,
+citations, attribution patterns) remain intact in main.
+
+What was preserved as the team-decided invariant (non-negotiable for
+the future re-implementation):
+- Runtime monkey-patching pattern (no modifications to `venv/site-packages`)
+- Bibliographic attribution to Lin et al. 2017 (arXiv:1708.02002)
+- Idempotency and reversibility of the patch
+- Smoke test as the validation contract before merge
+
+### Removed
+* `scripts/phase4_focal_loss.py` — the `FocalBCE` + `register_custom_loss()`
+  implementation written during audit closure. To be re-implemented by
+  Enrique per `docs/Enrique/PHASE4_TODO.md`.
+
+### Changed
+* `train.py` — removed `register_custom_loss` import/call, removed
+  `--gamma`/`--alpha` args, changed `--name` default to `baseline_ep{epochs}`.
+  Marker comment `# TODO [Enrique]` added where the loss registration goes.
+  All Phase-3 wiring (`register_custom_modules`, custom YAML load, argparse,
+  no silent except) preserved.
+* `scripts/phase4_validate.py` — removed assertion on `FocalBCE`. All
+  Phase-3 asserts (model build, nc=143, SubPixelConv/CoordAtt counts,
+  forward+backward dummy) preserved. Marker comment `# TODO [Enrique]`
+  added where the loss assertion goes.
+
+### Added
+* `docs/Enrique/PHASE4_TODO.md` — design spec for Enrique's re-implementation:
+  what's preserved, what's owned by him, what's negotiable, what's
+  invariant, how to validate, and the experimental backlog (4-cell
+  ablation, γ/α sweep, tail-class mAP) needed for paper defense.
+
+### Status by phase (post-handoff)
+| Phase | Owner | Status |
+|---|---|---|
+| 1 — Data Acquisition | Omar | ✅ retroactively patched, pipeline integrated |
+| 2 — Augmentation | Yael | ✅ delivered |
+| 3 — Architecture | Amaury | ✅ delivered, validated |
+| 4 — Training/Loss | Enrique | ⏳ structural fixes in main; Focal Loss handed back |
+| 5 — Edge Deploy | Nataly | ⏳ unblocked, can begin |
+| 6 — Benchmarking | Gabriela | ⏳ depends on Phase 5 |
+
+---
+
 ## 2026-05-04 — Phase 4 audit closure (round 1)
 
 Closes the 21 findings catalogued in [`docs/audits/2026-04-17-phase4-audit.md`](audits/2026-04-17-phase4-audit.md). Tier 1 (BLOCKER + HIGH) is fully closed; Tier 2/3 (MEDIUM/LOW + hygiene) is mostly closed, with `F-7` (dataset-fetch script) and `CONTRIBUTING.md` deferred to backlog per PI direction.
