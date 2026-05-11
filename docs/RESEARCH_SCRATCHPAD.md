@@ -9,17 +9,17 @@
 ## Pasos del handoff
 
 - [x] **Paso 0** — Init, git status clean confirmado.
-- [ ] **Paso 1** — Cirugía en train.py (remover register_custom_loss, --gamma, --alpha).
-- [ ] **Paso 2** — Cirugía en scripts/phase4_validate.py (remover assert FocalBCE).
-- [ ] **Paso 3** — Borrar scripts/phase4_focal_loss.py.
-- [ ] **Paso 4** — Crear docs/Enrique/PHASE4_TODO.md.
-- [ ] **Paso 5** — Actualizar docs/CHANGELOG.md.
+- [x] **Paso 1** — Cirugía en train.py (remover register_custom_loss, --gamma, --alpha). SHA a579c6efd
+- [x] **Paso 2** — Cirugía en scripts/phase4_validate.py (remover assert FocalBCE). SHA f6cdfcee8
+- [x] **Paso 3** — Borrar scripts/phase4_focal_loss.py. SHA 4105c1694
+- [x] **Paso 4** — Crear docs/Enrique/PHASE4_TODO.md. SHA cf4e08a2d
+- [x] **Paso 5** — Actualizar docs/CHANGELOG.md. SHA 96e3fdd41
 
 ---
 
 ## Estado del paso actual
 
-**Paso 1** — Iniciando cirugía en train.py.
+**HANDOFF COMPLETO** — EXP-HANDOFF-01 cerrado. 5/5 quality gates PASS.
 
 (Supersedes previous scratchpad used during read-only audit phase —
 historical content preserved in `docs/audits/2026-04-17-phase4-audit.md`.)
