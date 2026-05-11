@@ -1,9 +1,25 @@
-# Phase 4 Audit — Surgical Fix Scratchpad
+# EXP-HANDOFF-01 — Phase 4 Focal Loss Handoff to Enrique
 
-**Spec vinculante:** [audits/2026-04-17-phase4-audit.md](audits/2026-04-17-phase4-audit.md)
-**Fix report:** [audits/2026-04-17-phase4-fixes.md](audits/2026-04-17-phase4-fixes.md)
-**Fixer:** Senior ML Engineer / Surgical Fixer (agent)
-**Fecha inicio:** 2026-04-20
+**Spec vinculante:** NEXT_PROMPT + docs/Enrique/PHASE4_TODO.md
+**Mode:** Surgical removal — return Focal Loss ownership to Enrique
+**Fecha inicio:** 2026-05-11
+
+---
+
+## Pasos del handoff
+
+- [x] **Paso 0** — Init, git status clean confirmado.
+- [ ] **Paso 1** — Cirugía en train.py (remover register_custom_loss, --gamma, --alpha).
+- [ ] **Paso 2** — Cirugía en scripts/phase4_validate.py (remover assert FocalBCE).
+- [ ] **Paso 3** — Borrar scripts/phase4_focal_loss.py.
+- [ ] **Paso 4** — Crear docs/Enrique/PHASE4_TODO.md.
+- [ ] **Paso 5** — Actualizar docs/CHANGELOG.md.
+
+---
+
+## Estado del paso actual
+
+**Paso 1** — Iniciando cirugía en train.py.
 
 (Supersedes previous scratchpad used during read-only audit phase —
 historical content preserved in `docs/audits/2026-04-17-phase4-audit.md`.)

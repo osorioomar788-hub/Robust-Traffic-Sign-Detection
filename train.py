@@ -67,13 +67,11 @@ def parse_args() -> argparse.Namespace:
         help="Dataloader workers. Default: min(8, os.cpu_count() // 2).",
     )
     parser.add_argument("--seed", type=int, default=0)
-    parser.add_argument("--gamma", type=float, default=2.0, help="Focal loss gamma.")
-    parser.add_argument("--alpha", type=float, default=0.25, help="Focal loss alpha.")
     parser.add_argument("--project", default="runs/detect")
     parser.add_argument(
         "--name",
         default=None,
-        help="Run name. Default: focal_g{gamma}_a{alpha}_ep{epochs}_seed{seed}.",
+        help="Run name. Default: baseline_ep{epochs}.",
     )
     return parser.parse_args()
 
@@ -108,11 +106,10 @@ def main() -> None:
     register_custom_modules()
     print("[train] Phase-3 modules registered (SubPixelConv, CoordAtt).")
 
-    # ── Step 2: register Phase-4 focal loss ─────────────────────────
-    from scripts.phase4_focal_loss import register_custom_loss
-
-    register_custom_loss(gamma=args.gamma, alpha=args.alpha)
-    print(f"[train] Phase-4 FocalBCE registered (gamma={args.gamma}, alpha={args.alpha}).")
+    # TODO [Enrique]: insert register_custom_loss(args.gamma, args.alpha)
+    #                 here, AFTER register_custom_modules() and
+    #                 BEFORE 'from ultralytics import YOLO'.
+    #                 See docs/Enrique/PHASE4_TODO.md for spec.
 
     # ── Step 3: import YOLO AFTER both registrations ───────────────
     from ultralytics import YOLO
@@ -123,9 +120,7 @@ def main() -> None:
 
     device = resolve_device(args.device)
     workers = resolve_workers(args.workers)
-    name = args.name or (
-        f"focal_g{args.gamma}_a{args.alpha}_ep{args.epochs}_seed{args.seed}"
-    )
+    name = args.name or f"baseline_ep{args.epochs}"
 
     print(
         f"[train] Launching: device={device} workers={workers} "
