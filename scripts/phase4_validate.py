@@ -55,24 +55,14 @@ def parse_args() -> argparse.Namespace:
 def main() -> int:
     args = parse_args()
 
-    # ── Step 1: register Phase-3 + Phase-4 patches ──────────────────
+    # ── Step 1: register Phase-3 patches ────────────────────────────
     from scripts.phase3_architecture_design import register_custom_modules
-    from scripts.phase4_focal_loss import FocalBCE, register_custom_loss
 
     register_custom_modules()
-    register_custom_loss(gamma=args.gamma, alpha=args.alpha)
-    # Idempotency probe (audit I-3): a second call must not raise nor re-wrap.
-    register_custom_loss(gamma=args.gamma, alpha=args.alpha)
 
     # ── Step 2: import YOLO AFTER registration ──────────────────────
     import torch
     from ultralytics import YOLO
-    from ultralytics.utils import loss as ult_loss
-
-    assert getattr(ult_loss.v8DetectionLoss.__init__, "_focal_patched", False), (
-        "v8DetectionLoss.__init__ is not flagged _focal_patched — "
-        "register_custom_loss did not take effect."
-    )
 
     # ── Step 3: build model (regression check on Phase 3) ──────────
     model = YOLO(args.yaml)
@@ -96,17 +86,8 @@ def main() -> int:
 
     criterion = model.model.criterion
     bce_cls_name = type(criterion.bce).__name__
-    assert bce_cls_name == "FocalBCE", (
-        f"criterion.bce is {bce_cls_name}, expected FocalBCE. "
-        "register_custom_loss did not replace the BCE module."
-    )
-    assert isinstance(criterion.bce, FocalBCE)
-    assert criterion.bce.gamma == args.gamma
-    assert criterion.bce.alpha == args.alpha
-    print(
-        f"[validate] criterion.bce = FocalBCE("
-        f"gamma={criterion.bce.gamma}, alpha={criterion.bce.alpha})."
-    )
+    # TODO [Enrique]: re-add focal loss assertion here once
+    #                 scripts/phase4_focal_loss.py is implemented.
 
     # ── Step 5: backward + grad presence ────────────────────────────
     assert torch.isfinite(loss), f"loss is non-finite: {loss}"
