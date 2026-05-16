@@ -178,3 +178,9 @@ hipótesis que tuvimos en 24 horas.
 ablations. Si los plazos no encajan con lo que tienes encima, hablamos.
 
 — Amaury
+
+## 2. Justificación de Diseño de Software (Arquitectura de FocalBCE)
+Siguiendo los requerimientos de diseño, la implementación de la pérdida se estructuró tomando las siguientes decisiones arquitectónicas:
+
+* **Enfoque Orientado a Objetos (Subclase de `nn.Module`):** Se decidió implementar `FocalBCE` como una clase de PyTorch en lugar de una aproximación puramente funcional. Esto garantiza la compatibilidad "drop-in" con la arquitectura interna de Ultralytics, la cual espera que el atributo `self.bce` de la clase `v8DetectionLoss` sea un objeto instanciado con su propio método `forward`. Esto permite que el *monkey-patch* sea limpio e imperceptible para el resto del pipeline de entrenamiento.
+* **Elección de Variante (Standard vs. Varifocal/IoU-aware):** Para esta primera fase experimental, se optó por implementar la Focal Loss estándar (Lin et al., 2017) descartando momentáneamente variantes más complejas como Varifocal Loss. La justificación empírica es establecer una **línea base (baseline)** sólida para el paper de MICAI. Introducir variaciones combinadas (arquitectura custom + variante de loss compleja) oscurecería la matriz de ablación. Si la Focal Loss estándar demuestra superioridad en las tail-classes, la exploración de Varifocal quedará como trabajo futuro.
